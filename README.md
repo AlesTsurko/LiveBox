@@ -6,6 +6,7 @@
 Программа работает только с Ableton Live. Используется Jack-server для соединения с Ableton. Первый синт, канала 4 и 5 (или 5 и 6 в Ableton), второй - 6 и 7 (или 7 и 8 в Ableton). В четвертой категории звуковысотность неизменна. Можно использовать только моно .wav файлы.
 
 ## Instruction: ##
+The samples have to be in mono!
 1. Start Jack Server;
 2. In System => Audio Prefernces change default output to Jack;
 3. Start Ableton Live;
