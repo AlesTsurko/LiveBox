@@ -7,6 +7,7 @@
 
 ## Instruction: ##
 The samples have to be in mono!
+
 1. Start Jack Server;
 2. In System => Audio Prefernces change default output to Jack;
 3. Start Ableton Live;
