@@ -5,12 +5,12 @@
 Программа работает только с Ableton Live. Используется Jack-server для соединения с Ableton. Первый синт, канала 4 и 5 (или 5 и 6 в Ableton), второй - 6 и 7 (или 7 и 8 в Ableton). В четвертой категории звуковысотность неизменна. Можно использовать только моно .wav файлы.
 
 ## Instruction: ##
-1) Start Jack Server;
-2) In System => Audio Prefernces change default output to Jack;
-3) Start Ableton Live;
-4) Change Ableton Live Preferences => Audio Input and Output to Jack;
-5) Evaluate SuperCollider code;
-6) Connect 5,6,7,8 outputs of SC to 5,6,7,8 inputs of Ableton Live;
+1. Start Jack Server;
+2. In System => Audio Prefernces change default output to Jack;
+3. Start Ableton Live;
+4. Change Ableton Live Preferences => Audio Input and Output to Jack;
+5. Evaluate SuperCollider code;
+6. Connect 5,6,7,8 outputs of SC to 5,6,7,8 inputs of Ableton Live;
 
 
 ```
