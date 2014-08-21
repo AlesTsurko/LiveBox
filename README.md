@@ -16,17 +16,3 @@ The samples have to be in mono!
 6. Connect 5,6,7,8 outputs of SC to 5,6,7,8 inputs of Ableton Live;
 
 
-```
-#!superollider
-
-// SuperCollider - Ableton via Jack connection
-// test:
-s.makeWindow;
-{Out.ar(4, SinOsc.ar)}.play;
-{Out.ar(6, SinOsc.ar)}.play;
-```
-
-Аукс подключен ко входу карты. Микрофонов может быть тьма - столько же, сколько каналов в пульте, просто когда записывается сэмпл, выводить нужный канал в аукс.
-
-## Известные баги ##
-При переключении на session view или mixer view из режима секвенсера, рутина не успевает прекращать включать кнопки и они включаются в session view или mixer view. При повторном нажатии кнопки session или mixer проблема решается.
