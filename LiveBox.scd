@@ -1,6 +1,18 @@
 (
+// Keyboard is split into two synth. All notes bellow 60 - GranullatorI; above -
+// GranulatorII. Granulator II also transposed to two octave down (for right pitch).
+
+// Instructions to use LiveBox with Maintstage:
+// 1. Start Jack Server;
+// 2. Change SuperCollider s.options.device to "JackRouter";
+// 3. Start MainStage;
+// 4. Run SuperCollider code (or boot the server);
+// 5. Load Jack Studio Setup.
+
 Server.default = Server.local;
 s = Server.default;
+s.options.inDevice = "Built-in Microph"; // change to yours
+s.options.outDevice = "JackRouter"; // comment this if you don't want to use Jack server
 s.waitForBoot({
 	Routine.run{
 		MIDIClient.init;
@@ -44,6 +56,8 @@ s.waitForBoot({
 		b = ();
 		b.verb = Bus.audio(s, 2);
 		~micChNum = 0; // номер канала микрофона
+		~granulatorIOutBusNumber = 0; // номер выхода первого гранулятора
+		~granulatorIIOutBusNumber = 0; // номер выхода второго гранулятора
 
 		c = ();
 		c.send01 = Bus.control;
@@ -96,13 +110,12 @@ s.waitForBoot({
 
 		// device ID's
 		d = ();
-		d.launchPadS = -1471401813;
+		d.launchPadS = MIDIIn.findPort("Launchpad S", "Launchpad S").uid;
 		d.launchPadSOut = MIDIOut.newByName("Launchpad S", "Launchpad S");
-		d.radium = -274920389;
-		d.nanoPad = 441860033; // изменить на правильный
-		d.nanoKontrol = 1764340990;
-		d.virtualA = -803950327;
-		d.virtualB = -1933114777;
+		d.radium = MIDIIn.findPort("Keystation", "Port 1").uid;
+		d.nanoKontrol = MIDIIn.findPort("nanoKONTROL", "SLIDER/KNOB").uid;
+		d.virtualA = MIDIIn.findPort("Драйвер IAC", "Шина IAC 1").uid;
+		d.virtualB = MIDIIn.findPort("Драйвер IAC", "Шина IAC 2").uid;
 
 		t = TempoClock.new;
 
@@ -244,7 +257,7 @@ s.waitForBoot({
 
 			out = (osc1 + osc2 + osc3 + osc4) * env;
 
-			Out.ar(4, Pan2.ar(out, 0, gain));
+			Out.ar(~granulatorIOutBusNumber, Pan2.ar(out, 0, gain));
 			Out.ar(b.verb.index, out * send1)
 		}).add;
 
@@ -300,7 +313,7 @@ s.waitForBoot({
 
 			out = (osc1 + osc2 + osc3 + osc4) * env;
 
-			Out.ar(6, out * gain);
+			Out.ar(~granulatorIIOutBusNumber, out * gain);
 			Out.ar(b.verb.index, out * send1)
 		}).add;
 
@@ -314,19 +327,19 @@ s.waitForBoot({
 		"Gear/Keys.scd".loadRelative;
 		"Gear/nanoKontrol.scd".loadRelative;
 		"Gear/LaunchpadS.scd".loadRelative;
-		"Gear/LiveOSC.scd".loadRelative;
+		// "Gear/OSC.scd".loadRelative;
 	};
 });
 )
 
 (
-// Stop the programm
+// Stop the program
 CmdPeriod.run;
 s.freeAll;
 MIDIdef.freeAll;
 currentEnvironment.clear;
 )
-// Quite from the server before restarting the program.
+// Stop the server before restarting the program.
 s.quit;
 
 // For testing
