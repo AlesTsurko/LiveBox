@@ -4,11 +4,13 @@
 
 // Instructions to use LiveBox with Maintstage:
 // 1. Start Jack Server;
-// 2. Change SuperCollider s.options.device to "JackRouter";
-// 3. Start MainStage;
-// 4. Run SuperCollider code (or boot the server);
-// 5. Load Jack Studio Setup.
+// 2. Change SuperCollider s.options.inDevice to your input;
+// 3. Change SuperCollider s.options.outDevice to "JackRouter";
+// 4. Start Ableton;
+// 5. Run SuperCollider code (or boot the server);
+// 6. Load Jack Studio Setup.
 
+ServerOptions.devices;
 Server.default = Server.local;
 s = Server.default;
 s.options.inDevice = "Built-in Microph"; // change to yours
@@ -56,8 +58,8 @@ s.waitForBoot({
 		b = ();
 		b.verb = Bus.audio(s, 2);
 		~micChNum = 0; // номер канала микрофона
-		~granulatorIOutBusNumber = 0; // номер выхода первого гранулятора
-		~granulatorIIOutBusNumber = 0; // номер выхода второго гранулятора
+		~granulatorIOutBusNumber = 2; // номер выхода первого гранулятора
+		~granulatorIIOutBusNumber = 4; // номер выхода второго гранулятора
 
 		c = ();
 		c.send01 = Bus.control;
@@ -116,6 +118,7 @@ s.waitForBoot({
 		d.nanoKontrol = MIDIIn.findPort("nanoKONTROL", "SLIDER/KNOB").uid;
 		d.virtualA = MIDIIn.findPort("Драйвер IAC", "Шина IAC 1").uid;
 		d.virtualB = MIDIIn.findPort("Драйвер IAC", "Шина IAC 2").uid;
+		d.virtualANames = (\deviceName: "Драйвер IAC", \portName: "Шина IAC 1");
 
 		t = TempoClock.new;
 
@@ -327,7 +330,15 @@ s.waitForBoot({
 		"Gear/Keys.scd".loadRelative;
 		"Gear/nanoKontrol.scd".loadRelative;
 		"Gear/LaunchpadS.scd".loadRelative;
-		// "Gear/OSC.scd".loadRelative;
+		"Gear/Sync.scd".loadRelative;
+		"Gear/TouchOSC.scd".loadRelative;
+
+		"Gear/Keys.scd".resolveRelative.openDocument;
+		"Gear/nanoKontrol.scd".resolveRelative.openDocument;
+		"Gear/LaunchpadS.scd".resolveRelative.openDocument;
+		"Gear/Sync.scd".resolveRelative.openDocument;
+		"Gear/TouchOSC.scd".resolveRelative.openDocument;
+
 	};
 });
 )

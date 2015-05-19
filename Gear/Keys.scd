@@ -5,25 +5,25 @@ MIDIdef.noteOn("keys", {arg vel, note, ch, id;
 	// first synth
 	if((id == d.radium)
 		.and(s.numSynths <= 40)
-		.and(note < 60), {
-		~grainIcollector[note] = Synth("granulatorI", [\note, note]);
+		.and(note < 60),
+		// [note + 12] - транспонирование
+		{~grainIcollector[note + 12] = Synth("granulatorI", [\note, note + 12]);
 	});
 	// second synth
 	if((id == d.radium)
 		.and(s.numSynths <= 40)
 		.and(note > 59),
-		// [note - 24] - транспонирование, чтобы уровнять с гранулятор1, иначе
-		// будет завышено.
-		{~grainIIcollector[note-24] = Synth("granulatorII", [\note, note - 24])});
+		// [note - 12] - транспонирование
+		{~grainIIcollector[note-12] = Synth("granulatorII", [\note, note-12])});
 });
 
 MIDIdef.noteOff("keysOff", {arg vel, note, ch, id;
 	// first synth
 	if((id == d.radium)
 		.and(note < 60),
-		{~grainIcollector[note].release});
+		{~grainIcollector[note + 12].release});
 	// second synth
 	if((id == d.radium)
 		.and(note > 59),
-		{~grainIIcollector[note-24].release});
+		{~grainIIcollector[note-12].release});
 });
