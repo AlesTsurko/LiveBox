@@ -4,16 +4,23 @@
 
 // Instructions to use LiveBox with Maintstage:
 // 1. Start Jack Server;
-// 2. Change SuperCollider s.options.inDevice to your input;
-// 3. Change SuperCollider s.options.outDevice to "JackRouter";
-// 4. Start Ableton;
-// 5. Run SuperCollider code (or boot the server);
-// 6. Load Jack Studio Setup.
+// 2. Start TouchOSC Bridge;
+// 3. Connect iPad to Mac via bluetooth;
+// 4. In TouchOSC connect to host in Bridge and OSC options;
+// 5. In TouchOSC change OSC outgoing port to 23231;
+// 6. Change SuperCollider s.options.inDevice to your input;
+// 7. Change SuperCollider s.options.outDevice to "JackRouter";
+// 8. Run SuperCollider code (or boot the server);
+// 9. Run Mainstage;
+// 10. Load Jack Studio Setup.
+
+// Don't forget to down keyboard on 1 octave (for Radium - d 1)
 
 ServerOptions.devices;
 Server.default = Server.local;
 s = Server.default;
-s.options.inDevice = "Built-in Microph"; // change to yours
+// s.options.inDevice = "Built-in Microph"; // change to yours
+s.options.inDevice = "Lexicon Alpha In/Out";
 s.options.outDevice = "JackRouter"; // comment this if you don't want to use Jack server
 s.waitForBoot({
 	Routine.run{

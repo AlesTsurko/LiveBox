@@ -16,5 +16,9 @@
 // 	});
 // }, '/live/play');
 
-~midiClock = MIDIClockOut(d.virtualANames[\deviceName], d.virtualANames[\portName], t);
-~midiClock.start;
+
+// MIDI Clock
+/*~midiClock = MIDIClockOut(d.virtualANames[\deviceName], d.virtualANames[\portName], t);
+~midiClock.start;*/
+
+t.tempo = 45/60;
